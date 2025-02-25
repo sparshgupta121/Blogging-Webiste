@@ -31,13 +31,14 @@ if(!success){
     try{
     const user = await prisma.user.create({
       data: {
+        name:body.name,
         email: body.email,
         password: body.password
       }
     })
 
     const jwt = await sign({id: user.id},c.env.JWT_SECRET)
-    return c.json({ token: jwt })
+    return c.json({ jwt: jwt })
     }
     
     catch(e){
@@ -80,6 +81,6 @@ if(!success){
   }
 
 	const jwt = await sign({ id: user.id }, c.env.JWT_SECRET);
-	return c.json({ jwt });
+	return c.json({ jwt:jwt });
 
 })
